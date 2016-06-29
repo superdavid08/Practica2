@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Practica2</string>
+    <string name="adapter_messageStatus0">Instalada</string>
+    <string name="adapter_messageStatus1">Actualizada</string>
+    <string name="menu_adaper_msgDetail">Detalle</string>
+    <string name="menu_main_msgAdd">Agregar nuevo elemento</string>
+</resources>
