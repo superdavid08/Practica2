@@ -8,7 +8,7 @@ import elsuper.david.com.practica2.R;
  */
 public class Keys {
 
-    //public static final String KEY_USER = "key_user"; //MainActivity - DetailActivity //FragmentProfile
+    public static final String KEY_SAVE = "key_save"; //InsertActivity - MainActivity
 
     /*Guardamos en un arreglo los identificadores de las imagenes para
       tomarlas de forma aleatoria en la inserción de un ModelApp*/

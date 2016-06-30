@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.List;
 
 import elsuper.david.com.practica2.adapter.AdapterItemList;
 import elsuper.david.com.practica2.model.ModelApp;
+import elsuper.david.com.practica2.sql.AppDataSource;
+import elsuper.david.com.practica2.util.Keys;
 
 /**
  * Created by Andrés David García Gómez
@@ -22,19 +25,23 @@ import elsuper.david.com.practica2.model.ModelApp;
 public class MainActivity extends AppCompatActivity {
 
     private ListView listViewApps;
+    private static final int CODE_APP_SAVE = 1;
+    private AppDataSource appDataSource;;
+    private TextView tvListEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Obtenemos el control de lista
+        //Obtenemos los controles
         listViewApps = (ListView)findViewById(R.id.main_lvListApps);
+        tvListEmpty = (TextView)findViewById(R.id.main_tvListEmpty);
+        //Instanciamos el acceso a la base de datos
+        appDataSource = new AppDataSource(getApplicationContext());
 
-        //Obtenemos las Apps de la base de datos
-        //List<ModelApp> modelAppList =
-        //List<ModelItem> modelItemList = itemDataSource.getAllItems();
-        //listView.setAdapter(new AdapterItemList(getActivity(),modelItemList));
+        //Mostramos la lista
+        showList();
 
         //Manejamos su evento click
         listViewApps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -52,6 +59,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void showList() {
+        //Obtenemos las Apps de la base de datos
+        List<ModelApp> modelAppList = appDataSource.getAllApps();
+        //Si no hay elementos mostramos un texto indicandolo
+        if(modelAppList.size() == 0){
+            tvListEmpty.setVisibility(View.VISIBLE);
+            listViewApps.setVisibility(View.GONE);
+        }
+        else { //Si los hay, se muestran
+            tvListEmpty.setVisibility(View.GONE);
+            listViewApps.setVisibility(View.VISIBLE);
+            listViewApps.setAdapter(new AdapterItemList(getApplicationContext(), modelAppList));
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Inflamos el menú
@@ -63,10 +85,28 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_main_add:
-                Toast.makeText(getApplicationContext(), R.string.app_name, Toast.LENGTH_SHORT).show();
+                startActivityForResult(new Intent(getApplicationContext(), InsertActivity.class),
+                        CODE_APP_SAVE);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(CODE_APP_SAVE == requestCode && requestCode == RESULT_OK){
+            long result = data.getExtras().getLong(Keys.KEY_SAVE, -1);
+
+            if(result != -1){
+                showList();
+            }
+            else{
+                //Toast.makeText(getApplicationContext(),R.string.reg_txtError, Toast.LENGTH_SHORT).show();
+            }
+        }
+        else
+            super.onActivityResult(requestCode, resultCode, data);
     }
 }

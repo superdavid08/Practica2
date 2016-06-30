@@ -16,17 +16,29 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/colorStatus"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Apps" />
 
     </LinearLayout>
 
+    <TextView
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="@color/colorListEmpty"
+        android:visibility="invisible"
+        android:id="@+id/main_tvListEmpty"
+        android:text="@string/main_msgListEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <ListView
+        android:visibility="visible"
         android:id="@+id/main_lvListApps"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>

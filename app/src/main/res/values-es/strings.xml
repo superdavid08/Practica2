@@ -5,4 +5,9 @@
     <string name="adapter_messageStatus1">Actualizada</string>
     <string name="menu_adaper_msgDetail">Detalle</string>
     <string name="menu_main_msgAdd">Agregar nuevo elemento</string>
+    <string name="insert_hintAppName">Nombre de la App</string>
+    <string name="insert_hintDeveloper">Nombre del desarrollador</string>
+    <string name="insert_hintDetail">Detalle de la App...</string>
+    <string name="insert_btnSave">Guardar</string>
+    <string name="main_msgListEmpty">No hay Apps instaladas</string>
 </resources>

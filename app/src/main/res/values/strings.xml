@@ -4,4 +4,9 @@
     <string name="adapter_messageStatus1">Updated</string>
     <string name="menu_adaper_msgDetail">Detail</string>
     <string name="menu_main_msgAdd">Add new item</string>
+    <string name="insert_hintAppName">App name</string>
+    <string name="insert_hintDeveloper">Developer name</string>
+    <string name="insert_hintDetail">App Detail ...</string>
+    <string name="insert_btnSave">Save</string>
+    <string name="main_msgListEmpty">No Apps installed</string>
 </resources>
