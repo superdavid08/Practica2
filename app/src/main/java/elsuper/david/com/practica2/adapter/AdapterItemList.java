@@ -1,9 +1,7 @@
 package elsuper.david.com.practica2.adapter;
 
 import android.content.Context;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -44,7 +42,7 @@ public class AdapterItemList extends ArrayAdapter<ModelApp>{
         appImg.setImageResource(modelApp.appResourceId);
         appName.setText(modelApp.appName);
         appDeveloper.setText(modelApp.appDeveloperName);
-        appStatus.setText(modelApp.appUpdate == 0 ?
+        appStatus.setText(modelApp.appUpdated == 0 ?
                 String.format(String.valueOf(R.string.adapter_messageStatus0)) :
                 String.format(String.valueOf(R.string.adapter_messageStatus1)));
 

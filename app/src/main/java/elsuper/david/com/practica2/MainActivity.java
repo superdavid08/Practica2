@@ -16,15 +16,12 @@ import java.util.List;
 import elsuper.david.com.practica2.adapter.AdapterItemList;
 import elsuper.david.com.practica2.model.ModelApp;
 
+/**
+ * Created by Andrés David García Gómez
+ */
 public class MainActivity extends AppCompatActivity {
 
     private ListView listViewApps;
-    private List<ModelApp> array = new ArrayList<>();
-
-    /*
-    private int counter;
-    private boolean isWifi;
-    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
         //Obtenemos el control de lista
         listViewApps = (ListView)findViewById(R.id.main_lvListApps);
 
+        //Obtenemos las Apps de la base de datos
+        //List<ModelApp> modelAppList =
+        //List<ModelItem> modelItemList = itemDataSource.getAllItems();
+        //listView.setAdapter(new AdapterItemList(getActivity(),modelItemList));
+
         //Manejamos su evento click
         listViewApps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -41,12 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 //Accedemos a la información del item
                 AdapterItemList adapter = (AdapterItemList)parent.getAdapter();
                 ModelApp modelApp = adapter.getItem(position);
-                ModelApp modelApp2 = array.get(position);
-                //Toast.makeText(getApplicationContext(),modelApp2.appName, Toast.LENGTH_SHORT).show();
 
                 //Lanzamos la Activity de detalle y agregamos Extras
                 Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
-                intent.putExtra("name_developer",modelApp2.appDeveloperName);
+                intent.putExtra("name_developer",modelApp.appDeveloperName);
                 startActivity(intent);
             }
         });
