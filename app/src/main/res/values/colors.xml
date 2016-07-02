@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorStatus">#86c105</color>
     <color name="colorListEmpty">#A70313</color>
+    <color name="colorToolbar">#ce0518</color>
 </resources>

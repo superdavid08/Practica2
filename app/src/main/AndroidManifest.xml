@@ -8,15 +8,21 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity" />
-        <activity android:name=".InsertActivity"></activity>
+        <activity android:name=".DetailActivity"
+            android:label="@string/menu_adaper_msgDetail"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".InsertActivity"
+            android:label="@string/menu_main_msgAdd"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

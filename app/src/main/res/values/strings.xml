@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Practice2</string>
+    <string name="app_name">Practice 2</string>
     <string name="adapter_messageStatus0">Installed</string>
     <string name="adapter_messageStatus1">Updated</string>
     <string name="menu_adaper_msgDetail">Detail</string>

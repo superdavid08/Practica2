@@ -1,6 +1,7 @@
 package elsuper.david.com.practica2.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,10 +44,11 @@ public class AdapterItemList extends ArrayAdapter<ModelApp>{
         appName.setText(modelApp.appName);
         appDeveloper.setText(modelApp.appDeveloperName);
         appStatus.setText(modelApp.appUpdated == 0 ?
-                String.format(String.valueOf(R.string.adapter_messageStatus0)) :
-                String.format(String.valueOf(R.string.adapter_messageStatus1)));
+                getContext().getString(R.string.adapter_messageStatus0) :
+                getContext().getString(R.string.adapter_messageStatus1));
 
-        //TODO el menú
+        //TODO preguntar cómo se pone el menú por cada elemento
+
 
         return convertView;
     }

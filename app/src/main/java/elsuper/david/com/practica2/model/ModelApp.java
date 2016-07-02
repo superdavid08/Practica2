@@ -7,7 +7,7 @@ public class ModelApp {
     public int id; //Identificador
     public String appDeveloperName; //Nombre del desarrollador
     public String appName; //Nombre de la App
-    public int appResourceId; //Id de la imagen de la App
+    public int appResourceId; //Id del recurso de la imagen de la App
     public int appUpdated; //Bandera para saber si la App está actualizada
     public String appDetail; //Detalle de la App
 

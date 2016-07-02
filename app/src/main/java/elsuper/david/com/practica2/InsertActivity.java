@@ -3,7 +3,10 @@ package elsuper.david.com.practica2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -63,11 +66,31 @@ public class InsertActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra(Keys.KEY_SAVE, result);
                     setResult(RESULT_OK, intent);
-                    //finish();
-                    /*No se pone el finish porque la indicación es que hasta que el usuario de "back" pueda
-                      ver el elemento insertado*/
+                    finish();
                 }
             }
         });
+
+        //Para el toolbar
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
