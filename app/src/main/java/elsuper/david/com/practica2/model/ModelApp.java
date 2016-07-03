@@ -14,7 +14,8 @@ public class ModelApp {
     //Constructores
     public ModelApp() { }
 
-    public ModelApp(String appDeveloperName, String appName, int appResourceId, int appUpdated, String appDetail) {
+    public ModelApp(int id, String appDeveloperName, String appName, int appResourceId, int appUpdated, String appDetail) {
+        this.id = id;
         this.appDeveloperName = appDeveloperName;
         this.appName = appName;
         this.appResourceId = appResourceId;

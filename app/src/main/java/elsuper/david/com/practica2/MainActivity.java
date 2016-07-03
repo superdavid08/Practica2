@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 AdapterItemList adapter = (AdapterItemList)parent.getAdapter();
                 ModelApp modelApp = adapter.getItem(position);
 
-                //Lanzamos la Activity de detalle y agregamos Extras
+                //Lanzamos la Activity de detalle y enviamos información del elemento a través de Extras
                 Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
                 intent.putExtra(Keys.KEY_APP_ID,modelApp.id);
                 intent.putExtra(Keys.KEY_APP_DEVELOPER,modelApp.appDeveloperName);
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Para el toolbar
+        //Le ponemos su toolbar
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
@@ -97,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            //Si el usuario de click en la opción del menú para agragar un nuevo elemento
             case R.id.menu_main_add:
+                //Iniciamos la actividad de insert y quedamos a la espera de respuesta
                 startActivityForResult(new Intent(getApplicationContext(), InsertActivity.class),
                         REQUEST_CODE_APP_SAVE);
                 return true;
@@ -109,14 +111,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        //Si resultó exitoso el proceso de guardar
         if(REQUEST_CODE_APP_SAVE == requestCode && resultCode == RESULT_OK){
-            long result = data.getExtras().getLong(Keys.KEY_SAVE, -1);
+            //Recibimos el resultado de la activity de inserción
+            long result = data.getExtras().getLong(Keys.KEY_APP_SAVE_RECORD, -1);
 
+            //Si se pudo insertar, mostramos la lista con el nuevo elemento incluido
             if(result != -1){
                 showList();
-            }
-            else{
-                //Toast.makeText(getApplicationContext(),R.string.reg_txtError, Toast.LENGTH_SHORT).show();
             }
         }
         else
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
+    //Queda comentado porque podría utilizarse pero en este caso no es necesario
     @Override
     protected void onResume() {
         super.onResume();

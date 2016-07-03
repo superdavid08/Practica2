@@ -2,11 +2,19 @@
     <string name="app_name">Practice 2</string>
     <string name="adapter_messageStatus0">Installed</string>
     <string name="adapter_messageStatus1">Updated</string>
-    <string name="menu_adaper_msgDetail">Detail</string>
+    <string name="detail_msgDetail">Detail</string>
     <string name="menu_main_msgAdd">Add new item</string>
     <string name="insert_hintAppName">App name</string>
     <string name="insert_hintDeveloper">Developer name</string>
     <string name="insert_hintDetail">App Detail ...</string>
     <string name="insert_btnSave">Save</string>
+    <string name="insert_msgRequiredFields">Text fields are required</string>
+    <string name="insert_msgAppSaved">App saved</string>
+    <string name="insert_msgAppNotSaved">It could not be saved</string>
     <string name="main_msgListEmpty">No Apps installed</string>
+    <string name="menu_detail_msgEdit">Edit detail</string>
+    <string name="menu_detail_msgShow">Show detail</string>
+    <string name="fragdetail_btnUninstall">Uninstall</string>
+    <string name="fragdetail_btnOpen">Open</string>
+    <string name="fragdetail_btnUpdate">Update</string>
 </resources>

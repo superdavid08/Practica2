@@ -47,9 +47,6 @@ public class AdapterItemList extends ArrayAdapter<ModelApp>{
                 getContext().getString(R.string.adapter_messageStatus0) :
                 getContext().getString(R.string.adapter_messageStatus1));
 
-        //TODO preguntar cómo se pone el menú por cada elemento
-
-
         return convertView;
     }
 }

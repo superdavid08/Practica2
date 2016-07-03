@@ -14,7 +14,17 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
         tools:context="elsuper.david.com.practica2.DetailActivity">
+
+        <FrameLayout
+            android:layout_weight="1"
+            android:id="@+id/detail_flFragmentFolder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
 
     </LinearLayout>
 </LinearLayout>
+
+

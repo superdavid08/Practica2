@@ -3,11 +3,19 @@
     <string name="app_name">Práctica 2</string>
     <string name="adapter_messageStatus0">Instalada</string>
     <string name="adapter_messageStatus1">Actualizada</string>
-    <string name="menu_adaper_msgDetail">Detalle</string>
+    <string name="detail_msgDetail">Detalle</string>
     <string name="menu_main_msgAdd">Agregar nuevo elemento</string>
     <string name="insert_hintAppName">Nombre de la App</string>
     <string name="insert_hintDeveloper">Nombre del desarrollador</string>
     <string name="insert_hintDetail">Detalle de la App...</string>
     <string name="insert_btnSave">Guardar</string>
+    <string name="insert_msgRequiredFields">Los campos de texto son requeridos</string>
+    <string name="insert_msgAppSaved">App guardada</string>
+    <string name="insert_msgAppNotSaved">No se pudo guardar</string>
     <string name="main_msgListEmpty">No hay Apps instaladas</string>
+    <string name="menu_detail_msgEdit">Editar detalle</string>
+    <string name="menu_detail_msgShow">Mostrar detalle</string>
+    <string name="fragdetail_btnUninstall">Desinstalar</string>
+    <string name="fragdetail_btnOpen">Abrir</string>
+    <string name="fragdetail_btnUpdate">Actualizar</string>
 </resources>
