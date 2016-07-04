@@ -19,4 +19,6 @@
     <string name="fragdetail_btnOpen">Abrir</string>
     <string name="fragdetail_btnUpdate">Actualizar</string>
     <string name="fragedit_btnEdit">Editar</string>
+    <string name="fragedit_msgAppEdited">App editada</string>
+    <string name="fragedit_msgAppNotEdited">No se pudo editar</string>
 </resources>

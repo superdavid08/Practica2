@@ -26,11 +26,10 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
     private TextView tvDeveloperName;
     private TextView tvDetail;
 
-
     //Metodo que obtiene el modelo para pasarselo al fragmento a través del bundle
     public static FragmentDetail newInstance(ModelApp modelApp)
     {
-        FragmentDetail f = new FragmentDetail();
+        FragmentDetail fragment = new FragmentDetail();
         Bundle bundle = new Bundle();
         bundle.putInt(Keys.KEY_APP_ID, modelApp.id);
         bundle.putString(Keys.KEY_APP_DEVELOPER, modelApp.appDeveloperName);
@@ -39,9 +38,9 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
         bundle.putInt(Keys.KEY_APP_UPDATED, modelApp.appUpdated);
         bundle.putString(Keys.KEY_APP_DETAIL, modelApp.appDetail);
 
-        f.setArguments(bundle);
+        fragment.setArguments(bundle);
 
-        return f;
+        return fragment;
     }
 
     @Nullable
@@ -51,17 +50,17 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
         //Inflamos la vista
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        //Obtenemos los controles y les asignamos sus valores
+        //Obtenemos los controles
         ivImage = (ImageView)view.findViewById(R.id.fragdetail_ivImage);
         tvAppName = (TextView)view.findViewById(R.id.fragdetail_tvAppName);
         tvDeveloperName = (TextView)view.findViewById(R.id.fragdetail_tvDeveloperName);
         tvDetail = (TextView)view.findViewById(R.id.fragdetail_tvDetail);
 
+        //Les asignamos los valores del bundle
         ivImage.setImageResource(getArguments().getInt(Keys.KEY_APP_RESOURCEID));
         tvAppName.setText(getArguments().getString(Keys.KEY_APP_NAME));
         tvDeveloperName.setText(getArguments().getString(Keys.KEY_APP_DEVELOPER));
         tvDetail.setText(getArguments().getString(Keys.KEY_APP_DETAIL));
-
 
         //Seteamos el escucha para los botone
         view.findViewById(R.id.fragdetail_btnUninstall).setOnClickListener(this);
@@ -87,4 +86,3 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
         }
     }
 }
-

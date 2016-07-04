@@ -18,4 +18,6 @@
     <string name="fragdetail_btnOpen">Open</string>
     <string name="fragdetail_btnUpdate">Update</string>
     <string name="fragedit_btnEdit">Edit</string>
+    <string name="fragedit_msgAppEdited">App edited</string>
+    <string name="fragedit_msgAppNotEdited">Could not edit</string>
 </resources>

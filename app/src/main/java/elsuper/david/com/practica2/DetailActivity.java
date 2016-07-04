@@ -11,6 +11,7 @@ import android.widget.Toast;
 import elsuper.david.com.practica2.fragment.FragmentDetail;
 import elsuper.david.com.practica2.fragment.FragmentEdit;
 import elsuper.david.com.practica2.model.ModelApp;
+import elsuper.david.com.practica2.sql.AppDataSource;
 import elsuper.david.com.practica2.util.Keys;
 
 /**
@@ -18,16 +19,10 @@ import elsuper.david.com.practica2.util.Keys;
  */
 public class DetailActivity extends AppCompatActivity {
 
-    //Para acceder a ella en los dos Fragments
-    public static ModelApp modelAppDetail;
-
-    public static ModelApp getModelAppDetail() {
-        return modelAppDetail;
-    }
-
-    public static void setModelAppDetail(ModelApp modelAppDetail) {
-        DetailActivity.modelAppDetail = modelAppDetail;
-    }
+    //Identificador del modelo
+    private static int idModel;
+    //Para las operaciones con la tabla app_table
+    private AppDataSource appDataSource;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +37,18 @@ public class DetailActivity extends AppCompatActivity {
         int appUpdated = getIntent().getExtras().getInt(Keys.KEY_APP_UPDATED);
         String appDetail = getIntent().getExtras().getString(Keys.KEY_APP_DETAIL);
 
-        modelAppDetail = new ModelApp(appId,appDeveloper,appName,appResourceId,appUpdated,appDetail);
+        //Asignamos el identificador
+        idModel = appId;
 
+        //Instanciamos el modelo
+        ModelApp modelAppDetail = new ModelApp(appId,appDeveloper,appName,appResourceId,appUpdated,appDetail);
 
         //Por default mostramos el Fragment de detalle
         FragmentDetail fragmentDetail = FragmentDetail.newInstance(modelAppDetail);
         getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, fragmentDetail).commit();
+
+        //Instanciamos el acceso a la base de datos
+        appDataSource = new AppDataSource(getApplicationContext());
 
         //Para el toolbar
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -65,15 +66,23 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        //Consultamos el modelo para tener los datos actualizados
+        ModelApp model = appDataSource.getApp(idModel);
+        if(model == null) return false;
+
         switch (item.getItemId()){
             case android.R.id.home:
                 finish();
                 return true;
             case R.id.menu_detail_edit:
-                getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, new FragmentEdit()).commit();
+                //Ponemos el fragmento de edición
+                FragmentEdit fragmentEdit = FragmentEdit.newInstance(model);
+                getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, fragmentEdit).commit();
                 return true;
             case R.id.menu_detail_show:
-                FragmentDetail fragmentDetail = FragmentDetail.newInstance(modelAppDetail);
+                //Ponemos el fragmento de detalle
+                FragmentDetail fragmentDetail = FragmentDetail.newInstance(model);
                 getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, fragmentDetail).commit();
                 return true;
         }
