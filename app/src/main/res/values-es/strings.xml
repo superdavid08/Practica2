@@ -18,4 +18,5 @@
     <string name="fragdetail_btnUninstall">Desinstalar</string>
     <string name="fragdetail_btnOpen">Abrir</string>
     <string name="fragdetail_btnUpdate">Actualizar</string>
+    <string name="fragedit_btnEdit">Editar</string>
 </resources>

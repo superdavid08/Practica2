@@ -125,11 +125,11 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
     }
 
-    /*
-    //Queda comentado porque podría utilizarse pero en este caso no es necesario
+
+    //Necesrio para cuando viene desde DetailActivity
     @Override
     protected void onResume() {
         super.onResume();
         showList();
-    }*/
+    }
 }

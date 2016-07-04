@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import elsuper.david.com.practica2.fragment.FragmentDetail;
+import elsuper.david.com.practica2.fragment.FragmentEdit;
 import elsuper.david.com.practica2.model.ModelApp;
 import elsuper.david.com.practica2.util.Keys;
 
@@ -17,12 +18,16 @@ import elsuper.david.com.practica2.util.Keys;
  */
 public class DetailActivity extends AppCompatActivity {
 
-    private int appId;
-    private String appDeveloper;
-    private String appName;
-    private int appResourceId;
-    private int appUpdated;
-    private String appDetail;
+    //Para acceder a ella en los dos Fragments
+    public static ModelApp modelAppDetail;
+
+    public static ModelApp getModelAppDetail() {
+        return modelAppDetail;
+    }
+
+    public static void setModelAppDetail(ModelApp modelAppDetail) {
+        DetailActivity.modelAppDetail = modelAppDetail;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +35,18 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         //Obtenemos los Extras
-        appId = getIntent().getExtras().getInt(Keys.KEY_APP_ID);
-        appDeveloper = getIntent().getExtras().getString(Keys.KEY_APP_DEVELOPER);
-        appName = getIntent().getExtras().getString(Keys.KEY_APP_NAME);
-        appResourceId = getIntent().getExtras().getInt(Keys.KEY_APP_RESOURCEID);
-        appUpdated = getIntent().getExtras().getInt(Keys.KEY_APP_UPDATED);
-        appDetail = getIntent().getExtras().getString(Keys.KEY_APP_DETAIL);
+        int appId = getIntent().getExtras().getInt(Keys.KEY_APP_ID);
+        String appDeveloper = getIntent().getExtras().getString(Keys.KEY_APP_DEVELOPER);
+        String appName = getIntent().getExtras().getString(Keys.KEY_APP_NAME);
+        int appResourceId = getIntent().getExtras().getInt(Keys.KEY_APP_RESOURCEID);
+        int appUpdated = getIntent().getExtras().getInt(Keys.KEY_APP_UPDATED);
+        String appDetail = getIntent().getExtras().getString(Keys.KEY_APP_DETAIL);
+
+        modelAppDetail = new ModelApp(appId,appDeveloper,appName,appResourceId,appUpdated,appDetail);
 
 
         //Por default mostramos el Fragment de detalle
-        FragmentDetail fragmentDetail = FragmentDetail.newInstance(new
-                ModelApp(appId, appDeveloper, appName, appResourceId, appUpdated, appDetail));
+        FragmentDetail fragmentDetail = FragmentDetail.newInstance(modelAppDetail);
         getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, fragmentDetail).commit();
 
         //Para el toolbar
@@ -64,8 +70,11 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.menu_detail_edit:
+                getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, new FragmentEdit()).commit();
                 return true;
             case R.id.menu_detail_show:
+                FragmentDetail fragmentDetail = FragmentDetail.newInstance(modelAppDetail);
+                getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, fragmentDetail).commit();
                 return true;
         }
 

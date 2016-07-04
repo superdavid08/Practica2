@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/colorStatus"
+        android:textStyle="bold"
+        android:text="@string/menu_detail_msgEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_weight=".4"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/insert_hintAppName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:singleLine="true"
+            android:id="@+id/fragedit_etAppName"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/insert_hintDeveloper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:singleLine="true"
+            android:layout_marginTop="5dp"
+            android:id="@+id/fragedit_etDeveloperName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/insert_hintDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:maxLines="4"
+            android:layout_marginTop="16dp"
+            android:id="@+id/fragedit_etDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:layout_marginTop="16dp"
+            android:text="@string/adapter_messageStatus1"
+            android:id="@+id/fragedit_cbUpdated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight=".6"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:text="@string/fragedit_btnEdit"
+            android:id="@+id/fragedit_btnEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+
