@@ -1,7 +1,10 @@
 package elsuper.david.com.practica2.fragment;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.inputmethodservice.Keyboard;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,11 +12,15 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import elsuper.david.com.practica2.R;
 import elsuper.david.com.practica2.model.ModelApp;
+import elsuper.david.com.practica2.service.ServiceNotificationUpdate;
+import elsuper.david.com.practica2.sql.AppDataSource;
 import elsuper.david.com.practica2.util.Keys;
 
 /**
@@ -25,6 +32,44 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
     private TextView tvAppName;
     private TextView tvDeveloperName;
     private TextView tvDetail;
+    private Button btnUninstall;
+    private Button btnOpen;
+    private Button btnUpdate;
+    private ProgressBar pbLoading;
+    //Identificador del modelo
+    private static int idModel;
+    //Para las operaciones con la tabla app_table
+    private AppDataSource appDataSource;
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean updated = intent.getExtras().getBoolean(Keys.KEY_SERVICE_UPDATE);
+            if(updated) {
+                //Si el servicio terminó, habilitamos botones
+                btnUninstall.setEnabled(true);
+                btnOpen.setEnabled(true);
+                //Ocultamos el loading
+                pbLoading.setVisibility(View.GONE);
+
+                //Consultamos el modelo a través de su identificador
+                ModelApp model = appDataSource.getApp(idModel);
+
+                //Actualizamos su campo updated
+                model.appUpdated = 1;
+                appDataSource.updateApp(model);
+
+                //Ponemos el fragmento de detalle con información actualizada
+                FragmentDetail fragmentDetail = FragmentDetail.newInstance(model);
+                getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, fragmentDetail).commit();
+            }
+            else{
+                //Bloqueamos botónes mientras no haya termiado el servicio de actualización
+                btnUninstall.setEnabled(false);
+                btnOpen.setEnabled(false);
+            }
+        }
+    };
 
     //Metodo que obtiene el modelo para pasarselo al fragmento a través del bundle
     public static FragmentDetail newInstance(ModelApp modelApp)
@@ -50,22 +95,36 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
         //Inflamos la vista
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
+        //Instanciamos el acceso a la base de datos
+        appDataSource = new AppDataSource(getActivity());
+
         //Obtenemos los controles
         ivImage = (ImageView)view.findViewById(R.id.fragdetail_ivImage);
         tvAppName = (TextView)view.findViewById(R.id.fragdetail_tvAppName);
         tvDeveloperName = (TextView)view.findViewById(R.id.fragdetail_tvDeveloperName);
         tvDetail = (TextView)view.findViewById(R.id.fragdetail_tvDetail);
+        btnUninstall = (Button)view.findViewById(R.id.fragdetail_btnUninstall);
+        btnOpen = (Button)view.findViewById(R.id.fragdetail_btnOpen);
+        btnUpdate = (Button)view.findViewById(R.id.fragdetail_btnUpdate);
+        pbLoading = (ProgressBar)view.findViewById(R.id.fragdetail_pbLoading);
 
         //Les asignamos los valores del bundle
         ivImage.setImageResource(getArguments().getInt(Keys.KEY_APP_RESOURCEID));
         tvAppName.setText(getArguments().getString(Keys.KEY_APP_NAME));
         tvDeveloperName.setText(getArguments().getString(Keys.KEY_APP_DEVELOPER));
         tvDetail.setText(getArguments().getString(Keys.KEY_APP_DETAIL));
+        idModel = getArguments().getInt(Keys.KEY_APP_ID);
 
-        //Seteamos el escucha para los botone
-        view.findViewById(R.id.fragdetail_btnUninstall).setOnClickListener(this);
-        view.findViewById(R.id.fragdetail_btnOpen).setOnClickListener(this);
-        view.findViewById(R.id.fragdetail_btnUpdate).setOnClickListener(this);
+        //Si ya está actualizada, el botón de "Actualizar" permanece deshabilitado y su texto cambia a "Actualizado"
+        if(getArguments().getInt(Keys.KEY_APP_UPDATED) == 1) {
+            btnUpdate.setEnabled(false);
+            btnUpdate.setText(R.string.adapter_messageStatus1);
+        }
+
+        //Seteamos el escucha para los botones
+        btnUninstall.setOnClickListener(this);
+        btnOpen.setOnClickListener(this);
+        btnUpdate.setOnClickListener(this);
 
         return view;
     }
@@ -82,7 +141,31 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
                 getActivity().startActivity(intent);
                 break;
             case R.id.fragdetail_btnUpdate:
+                //Mostramos el loading e iniciamos el servicio
+                pbLoading.setVisibility(View.VISIBLE);
+                getActivity().startService(new Intent(getActivity(), ServiceNotificationUpdate.class));
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Registramos el broadcastReceiver
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ServiceNotificationUpdate.ACTION_SEND_UPDATE_NOTIFICATION);
+        getActivity().registerReceiver(broadcastReceiver,filter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(broadcastReceiver);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().stopService(new Intent(getActivity(),ServiceNotificationUpdate.class));
     }
 }

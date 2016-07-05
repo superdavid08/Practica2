@@ -20,4 +20,8 @@
     <string name="fragedit_btnEdit">Edit</string>
     <string name="fragedit_msgAppEdited">App edited</string>
     <string name="fragedit_msgAppNotEdited">Could not edit</string>
+    <string name="serviceupdate_preContentTitle">Updating App</string>
+    <string name="serviceupdate_preContentText">Please wait...</string>
+    <string name="serviceupdate_postContentTitle">App Update</string>
+    <string name="serviceupdate_postContentText">The upgrade is completed</string>
 </resources>

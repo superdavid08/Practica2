@@ -20,12 +20,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".DetailActivity"
             android:label="@string/detail_msgDetail"
             android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name=".InsertActivity"
             android:label="@string/menu_main_msgAdd"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <service android:name=".service.ServiceNotificationUpdate"></service>
     </application>
 
 </manifest>

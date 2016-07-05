@@ -22,7 +22,7 @@ public class DetailActivity extends AppCompatActivity {
     //Identificador del modelo
     private static int idModel;
     //Para las operaciones con la tabla app_table
-    private AppDataSource appDataSource;;
+    private AppDataSource appDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

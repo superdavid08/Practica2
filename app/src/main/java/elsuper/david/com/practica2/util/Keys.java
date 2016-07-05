@@ -21,10 +21,12 @@ public class Keys {
                                                 R.drawable.ic_action_settings_input_component,
                                                 R.drawable.ic_action_shopping_cart};
 
-    public static final String KEY_APP_ID = "key_id"; //MainActivity - DetailActivity - FragmentDetail
-    public static final String KEY_APP_DEVELOPER = "key_developer"; //MainActivity - DetailActivity - FragmentDetail
-    public static final String KEY_APP_NAME = "key_name"; //MainActivity - DetailActivity - FragmentDetail
-    public static final String KEY_APP_RESOURCEID = "key_resource"; //MainActivity - DetailActivity - FragmentDetail
-    public static final String KEY_APP_UPDATED = "key_updated"; //MainActivity - DetailActivity - FragmentDetail
-    public static final String KEY_APP_DETAIL = "key_detail"; //MainActivity - DetailActivity - FragmentDetail
+    public static final String KEY_APP_ID = "key_id"; //MainActivity - DetailActivity - FragmentDetail - FragmentEdit
+    public static final String KEY_APP_DEVELOPER = "key_developer"; //MainActivity - DetailActivity - FragmentDetail - FragmentEdit
+    public static final String KEY_APP_NAME = "key_name"; //MainActivity - DetailActivity - FragmentDetail - FragmentEdit
+    public static final String KEY_APP_RESOURCEID = "key_resource"; //MainActivity - DetailActivity - FragmentDetail - FragmentEdit
+    public static final String KEY_APP_UPDATED = "key_updated"; //MainActivity - DetailActivity - FragmentDetail - FragmentEdit
+    public static final String KEY_APP_DETAIL = "key_detail"; //MainActivity - DetailActivity - FragmentDetail - FragmentEdit
+
+    public static final String KEY_SERVICE_UPDATE = "key_service_update"; //ServiceNotificationUpdate
 }
