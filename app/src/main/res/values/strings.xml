@@ -17,11 +17,16 @@
     <string name="fragdetail_btnUninstall">Uninstall</string>
     <string name="fragdetail_btnOpen">Open</string>
     <string name="fragdetail_btnUpdate">Update</string>
+    <string name="fragdetail_msgQuestionUninstall">Do you want to uninstall this app?</string>
     <string name="fragedit_btnEdit">Edit</string>
     <string name="fragedit_msgAppEdited">App edited</string>
     <string name="fragedit_msgAppNotEdited">Could not edit</string>
     <string name="serviceupdate_preContentTitle">Updating App</string>
-    <string name="serviceupdate_preContentText">Please wait...</string>
-    <string name="serviceupdate_postContentTitle">App Update</string>
+    <string name="services_preContentText">Please wait...</string>
+    <string name="serviceupdate_postContentTitle">App Updated</string>
     <string name="serviceupdate_postContentText">The upgrade is completed</string>
+    <string name="serviceuninstall_preContentTitle">Uninstalling App</string>
+    <string name="serviceuninstall_postContentTitle">App uninstalled</string>
+    <string name="serviceuninstall_postContentText">Uninstallation is completed</string>
+    <string name="serviceuninstall_postContentInfo">Uninstalled</string>
 </resources>

@@ -17,19 +17,19 @@ import elsuper.david.com.practica2.util.Keys;
 /**
  * Created by Andrés David García Gómez
  */
-public class ServiceNotificationUpdate extends Service {
+public class ServiceNotificationUninstall extends Service{
 
-    public static final String ACTION_SEND_UPDATE_NOTIFICATION = "com.david.elsuper.SEND_UPDATE_NOTIFICATION";
+    public static final String ACTION_SEND_UNINSTALL_NOTIFICATION = "com.david.elsuper.SEND_UNINSTALL_NOTIFICATION";
     //Esta bandera indicará el momento en que ha terminado el proceso
-    public static boolean UPDATED = false;
+    public static boolean UNINSTALLED = false;
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             handler.postDelayed(runnable,1000);
-            Intent intent = new Intent(ACTION_SEND_UPDATE_NOTIFICATION);
-            //Devolvemos la bandera de actualización
-            intent.putExtra(Keys.KEY_SERVICE_UPDATE,UPDATED);
+            Intent intent = new Intent(ACTION_SEND_UNINSTALL_NOTIFICATION);
+            //Devolvemos la bandera de desinstalación
+            intent.putExtra(Keys.KEY_SERVICE_UNINSTALL,UNINSTALLED);
             sendBroadcast(intent);
         }
     };
@@ -39,7 +39,7 @@ public class ServiceNotificationUpdate extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        //Iniciamos el monitoreo de la bandera de actualización
+        //Iniciamos el monitoreo de la bandera de desinstalación
         handler.post(runnable);
     }
 
@@ -72,22 +72,22 @@ public class ServiceNotificationUpdate extends Service {
 
         private NotificationCompat.Builder notification;
         //Número máximo de conteo en el proceso
-        private int MAX = 10;
+        private int MAX = 5;
 
         @Override
         protected void onPreExecute() {
             //super.onPreExecute();
             //Configuramos la notificación inicial
             notification = new NotificationCompat.Builder(getApplicationContext())
-                    .setContentTitle(getString(R.string.serviceupdate_preContentTitle))
+                    .setContentTitle(getString(R.string.serviceuninstall_preContentTitle))
                     .setContentText(getString(R.string.services_preContentText))
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_android))
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_group_work))
                     .setSmallIcon(android.R.drawable.ic_dialog_email);
         }
 
         @Override
         protected Boolean doInBackground(Integer... params) {
-            //Ciclo del progreso (10 segundos)
+            //Ciclo del progreso (5 segundos)
             for (int i = 0; i < MAX; i++) {
                 publishProgress(i);
                 try {
@@ -106,7 +106,7 @@ public class ServiceNotificationUpdate extends Service {
             //Avance del progreso
             notification.setProgress(MAX, values[0], false);
             if(values[0]== MAX-1) //Si ha llegado al máximo
-                UPDATED = true; //Avisamos que ha terminado de actualizar
+                UNINSTALLED = true; //Avisamos que ha terminado de desinstalar
 
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             manager.notify(0, notification.build());
@@ -118,18 +118,18 @@ public class ServiceNotificationUpdate extends Service {
             if (result) {
                 //Configuramos la notificación final
                 notification.setProgress(0, 0, false);//Eliminamos el progress
-                notification.setContentTitle(getString(R.string.serviceupdate_postContentTitle));
-                notification.setContentText(getString(R.string.serviceupdate_postContentText));
-                notification.setContentInfo(getString(R.string.adapter_messageStatus1));
+                notification.setContentTitle(getString(R.string.serviceuninstall_postContentTitle));
+                notification.setContentText(getString(R.string.serviceuninstall_postContentText));
+                notification.setContentInfo(getString(R.string.serviceuninstall_postContentInfo));
 
                 notification.setAutoCancel(true);
 
                 notification.setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(getString(R.string.serviceupdate_postContentText)));
+                        .bigText(getString(R.string.serviceuninstall_postContentText)));
 
                 NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 manager.notify(0, notification.build());
-                UPDATED = false; //Volvemos a poner el valor default
+                UNINSTALLED = false; //Volvemos a poner el valor default
             }
 
             myAsyncTask = null;

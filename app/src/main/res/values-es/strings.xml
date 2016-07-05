@@ -18,11 +18,16 @@
     <string name="fragdetail_btnUninstall">Desinstalar</string>
     <string name="fragdetail_btnOpen">Abrir</string>
     <string name="fragdetail_btnUpdate">Actualizar</string>
+    <string name="fragdetail_msgQuestionUninstall">¿Quieres desinstalar esta App?</string>
     <string name="fragedit_btnEdit">Editar</string>
     <string name="fragedit_msgAppEdited">App editada</string>
     <string name="fragedit_msgAppNotEdited">No se pudo editar</string>
     <string name="serviceupdate_preContentTitle">Actualizando App</string>
-    <string name="serviceupdate_preContentText">Espere por favor...</string>
+    <string name="services_preContentText">Espere por favor...</string>
     <string name="serviceupdate_postContentTitle">App Actualizada</string>
     <string name="serviceupdate_postContentText">Se ha completado la actualización</string>
+    <string name="serviceuninstall_preContentTitle">Desinstalando App</string>
+    <string name="serviceuninstall_postContentTitle">App desinstalada</string>
+    <string name="serviceuninstall_postContentText">Se ha completado la desinstalación</string>
+    <string name="serviceuninstall_postContentInfo">Desinstalada</string>
 </resources>

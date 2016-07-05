@@ -28,5 +28,6 @@ public class Keys {
     public static final String KEY_APP_UPDATED = "key_updated"; //MainActivity - DetailActivity - FragmentDetail - FragmentEdit
     public static final String KEY_APP_DETAIL = "key_detail"; //MainActivity - DetailActivity - FragmentDetail - FragmentEdit
 
-    public static final String KEY_SERVICE_UPDATE = "key_service_update"; //ServiceNotificationUpdate
+    public static final String KEY_SERVICE_UPDATE = "key_service_update"; //ServiceNotificationUpdate - FragmentDetail
+    public static final String KEY_SERVICE_UNINSTALL = "key_service_uninstall"; //ServiceNotificationUninstall - FragmentDetail
 }

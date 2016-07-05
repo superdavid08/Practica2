@@ -1,8 +1,10 @@
 package elsuper.david.com.practica2.fragment;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.inputmethodservice.Keyboard;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 
 import elsuper.david.com.practica2.R;
 import elsuper.david.com.practica2.model.ModelApp;
+import elsuper.david.com.practica2.service.ServiceNotificationUninstall;
 import elsuper.david.com.practica2.service.ServiceNotificationUpdate;
 import elsuper.david.com.practica2.sql.AppDataSource;
 import elsuper.david.com.practica2.util.Keys;
@@ -41,7 +44,7 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
     //Para las operaciones con la tabla app_table
     private AppDataSource appDataSource;
 
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver broadcastReceiverUpdate = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             boolean updated = intent.getExtras().getBoolean(Keys.KEY_SERVICE_UPDATE);
@@ -133,6 +136,20 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragdetail_btnUninstall:
+                //Mostramos un mensaje de confirmación
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(R.string.fragdetail_btnUninstall)
+                        .setMessage(R.string.fragdetail_msgQuestionUninstall)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //getActivity().startService(new Intent(getActivity(), ServiceNotificationUninstall.class));
+                            }})
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }})
+                        .setCancelable(false).create().show();
                 break;
             case R.id.fragdetail_btnOpen:
                 //Abrimos la página de google
@@ -152,15 +169,15 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         //Registramos el broadcastReceiver
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ServiceNotificationUpdate.ACTION_SEND_UPDATE_NOTIFICATION);
-        getActivity().registerReceiver(broadcastReceiver,filter);
+        IntentFilter filterUpdate = new IntentFilter();
+        filterUpdate.addAction(ServiceNotificationUpdate.ACTION_SEND_UPDATE_NOTIFICATION);
+        getActivity().registerReceiver(broadcastReceiverUpdate,filterUpdate);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().unregisterReceiver(broadcastReceiver);
+        getActivity().unregisterReceiver(broadcastReceiverUpdate);
     }
 
     @Override
