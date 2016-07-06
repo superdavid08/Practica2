@@ -39,6 +39,7 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
     private Button btnOpen;
     private Button btnUpdate;
     private ProgressBar pbLoading;
+    private TextView tvUninstalled;
     //Identificador del modelo
     private static int idModel;
     //Para las operaciones con la tabla app_table
@@ -70,6 +71,32 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
                 //Bloqueamos botónes mientras no haya termiado el servicio de actualización
                 btnUninstall.setEnabled(false);
                 btnOpen.setEnabled(false);
+            }
+        }
+    };
+
+    private BroadcastReceiver broadcastReceiverUninstall = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean uninstalled = intent.getExtras().getBoolean(Keys.KEY_SERVICE_UNINSTALL);
+            if(uninstalled) {
+                //Si el servicio terminó, ocultamos el loading
+                pbLoading.setVisibility(View.GONE);
+
+                //Consultamos el modelo a través de su identificador
+                ModelApp model = appDataSource.getApp(idModel);
+
+                //Eliminamos el modelo de la base de datos
+                appDataSource.deleteApp(model);
+
+                //Mostramos el texto al usuario
+                tvUninstalled.setVisibility(View.VISIBLE);
+            }
+            else{
+                //Desaparecemos los botónes porque la APP se está desinstalando
+                btnUninstall.setVisibility(View.GONE);
+                btnOpen.setVisibility(View.GONE);
+                btnUpdate.setVisibility(View.GONE);
             }
         }
     };
@@ -110,6 +137,7 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
         btnOpen = (Button)view.findViewById(R.id.fragdetail_btnOpen);
         btnUpdate = (Button)view.findViewById(R.id.fragdetail_btnUpdate);
         pbLoading = (ProgressBar)view.findViewById(R.id.fragdetail_pbLoading);
+        tvUninstalled = (TextView)view.findViewById(R.id.fragdetail_tvUninstalled);
 
         //Les asignamos los valores del bundle
         ivImage.setImageResource(getArguments().getInt(Keys.KEY_APP_RESOURCEID));
@@ -143,7 +171,9 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //getActivity().startService(new Intent(getActivity(), ServiceNotificationUninstall.class));
+                                //Mostramos el loading e iniciamos el servicio
+                                pbLoading.setVisibility(View.VISIBLE);
+                                getActivity().startService(new Intent(getActivity(), ServiceNotificationUninstall.class));
                             }})
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                             @Override
@@ -168,21 +198,29 @@ public class FragmentDetail extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        //Registramos el broadcastReceiver
+        //Registramos los broadcastReceiver
         IntentFilter filterUpdate = new IntentFilter();
         filterUpdate.addAction(ServiceNotificationUpdate.ACTION_SEND_UPDATE_NOTIFICATION);
         getActivity().registerReceiver(broadcastReceiverUpdate,filterUpdate);
+
+        IntentFilter filterUninstall = new IntentFilter();
+        filterUninstall.addAction(ServiceNotificationUninstall.ACTION_SEND_UNINSTALL_NOTIFICATION);
+        getActivity().registerReceiver(broadcastReceiverUninstall,filterUninstall);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        //Quitamos los broadcastReceiver
         getActivity().unregisterReceiver(broadcastReceiverUpdate);
+        getActivity().unregisterReceiver(broadcastReceiverUninstall);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //Detenemos los servicios
         getActivity().stopService(new Intent(getActivity(),ServiceNotificationUpdate.class));
+        getActivity().stopService(new Intent(getActivity(),ServiceNotificationUninstall.class));
     }
 }

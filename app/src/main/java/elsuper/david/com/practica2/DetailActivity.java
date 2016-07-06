@@ -1,6 +1,9 @@
 package elsuper.david.com.practica2;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +14,7 @@ import android.widget.Toast;
 import elsuper.david.com.practica2.fragment.FragmentDetail;
 import elsuper.david.com.practica2.fragment.FragmentEdit;
 import elsuper.david.com.practica2.model.ModelApp;
+import elsuper.david.com.practica2.service.ServiceNotificationUninstall;
 import elsuper.david.com.practica2.sql.AppDataSource;
 import elsuper.david.com.practica2.util.Keys;
 
@@ -23,6 +27,14 @@ public class DetailActivity extends AppCompatActivity {
     private static int idModel;
     //Para las operaciones con la tabla app_table
     private AppDataSource appDataSource;
+    private boolean ACTIVE_UNINSTALLATION; //Bandera que indica si se está desinstalando la App seleccionada
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ACTIVE_UNINSTALLATION = true;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +67,9 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        //Al inicio no hay nada desinstalandose
+        ACTIVE_UNINSTALLATION = false;
     }
 
     @Override
@@ -76,17 +91,42 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.menu_detail_edit:
-                //Ponemos el fragmento de edición
-                FragmentEdit fragmentEdit = FragmentEdit.newInstance(model);
-                getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, fragmentEdit).commit();
+                //Si la App no está desinstalandose
+                if(!ACTIVE_UNINSTALLATION) {
+                    //Ponemos el fragmento de edición
+                    FragmentEdit fragmentEdit = FragmentEdit.newInstance(model);
+                    getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, fragmentEdit).commit();
+                }
                 return true;
             case R.id.menu_detail_show:
-                //Ponemos el fragmento de detalle
-                FragmentDetail fragmentDetail = FragmentDetail.newInstance(model);
-                getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, fragmentDetail).commit();
+                //Si la App no está desinstalandose
+                if(!ACTIVE_UNINSTALLATION) {
+                    //Ponemos el fragmento de detalle
+                    FragmentDetail fragmentDetail = FragmentDetail.newInstance(model);
+                    getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, fragmentDetail).commit();
+                }
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Registramos el broadcastReceiver
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ServiceNotificationUninstall.ACTION_SEND_UNINSTALL_NOTIFICATION);
+        registerReceiver(broadcastReceiver,filter);
+
+        //Reiniciamos la bandera
+        ACTIVE_UNINSTALLATION = false;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //Quitamos el broadcastReceiver
+        unregisterReceiver(broadcastReceiver);
     }
 }
