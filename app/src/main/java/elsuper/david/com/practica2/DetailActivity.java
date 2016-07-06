@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import elsuper.david.com.practica2.fragment.FragmentDetail;
 import elsuper.david.com.practica2.fragment.FragmentEdit;

@@ -1,7 +1,6 @@
 package elsuper.david.com.practica2.fragment;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -10,11 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import elsuper.david.com.practica2.DetailActivity;
 import elsuper.david.com.practica2.R;
 import elsuper.david.com.practica2.model.ModelApp;
 import elsuper.david.com.practica2.sql.AppDataSource;
@@ -98,7 +94,7 @@ public class FragmentEdit extends Fragment implements View.OnClickListener{
                 !TextUtils.isEmpty(etDeveloperName.getText().toString()) &&
                 !TextUtils.isEmpty(etDetail.getText().toString())) {
 
-            //Llenamos el model que se actualizará
+            //Llenamos el model que se actualizará (ya teníamos el id y el resourceId)
             modelApp.appName = etAppName.getText().toString();
             modelApp.appDeveloperName = etDeveloperName.getText().toString();
             modelApp.appDetail = etDetail.getText().toString();

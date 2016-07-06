@@ -10,9 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import elsuper.david.com.practica2.adapter.AdapterItemList;
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     //Para el ActivityResult
     private static final int REQUEST_CODE_APP_SAVE = 1;
     //Para las operaciones con la tabla app_table
-    private AppDataSource appDataSource;;
+    private AppDataSource appDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
