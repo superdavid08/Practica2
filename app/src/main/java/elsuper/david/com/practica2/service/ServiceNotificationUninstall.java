@@ -109,7 +109,7 @@ public class ServiceNotificationUninstall extends Service{
                 UNINSTALLED = true; //Avisamos que ha terminado de desinstalar
 
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.notify(0, notification.build());
+            manager.notify(Keys.KEY_NOTIFICATION_UNINSTALL_ID, notification.build());
         }
 
         @Override
@@ -128,7 +128,7 @@ public class ServiceNotificationUninstall extends Service{
                         .bigText(getString(R.string.serviceuninstall_postContentText)));
 
                 NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                manager.notify(0, notification.build());
+                manager.notify(Keys.KEY_NOTIFICATION_UNINSTALL_ID, notification.build());
                 UNINSTALLED = false; //Volvemos a poner el valor default
             }
 

@@ -109,7 +109,7 @@ public class ServiceNotificationUpdate extends Service {
                 UPDATED = true; //Avisamos que ha terminado de actualizar
 
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.notify(0, notification.build());
+            manager.notify(Keys.KEY_NOTIFICATION_UPDATE_ID, notification.build());
         }
 
         @Override
@@ -128,7 +128,7 @@ public class ServiceNotificationUpdate extends Service {
                         .bigText(getString(R.string.serviceupdate_postContentText)));
 
                 NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                manager.notify(0, notification.build());
+                manager.notify(Keys.KEY_NOTIFICATION_UPDATE_ID, notification.build());
                 UPDATED = false; //Volvemos a poner el valor default
             }
 

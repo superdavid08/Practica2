@@ -32,6 +32,7 @@ public class DetailActivity extends AppCompatActivity {
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            //No necesitamos saber el valor de su Extra, con que entre aquí significa que se está desinstalando
             ACTIVE_UNINSTALLATION = true;
         }
     };
@@ -84,7 +85,6 @@ public class DetailActivity extends AppCompatActivity {
 
         //Consultamos el modelo para tener los datos actualizados
         ModelApp model = appDataSource.getApp(idModel);
-        if(model == null) return false;
 
         switch (item.getItemId()){
             case android.R.id.home:
@@ -92,7 +92,7 @@ public class DetailActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_detail_edit:
                 //Si la App no está desinstalandose
-                if(!ACTIVE_UNINSTALLATION) {
+                if(!ACTIVE_UNINSTALLATION && model != null) {
                     //Ponemos el fragmento de edición
                     FragmentEdit fragmentEdit = FragmentEdit.newInstance(model);
                     getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, fragmentEdit).commit();
@@ -100,7 +100,7 @@ public class DetailActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_detail_show:
                 //Si la App no está desinstalandose
-                if(!ACTIVE_UNINSTALLATION) {
+                if(!ACTIVE_UNINSTALLATION && model != null) {
                     //Ponemos el fragmento de detalle
                     FragmentDetail fragmentDetail = FragmentDetail.newInstance(model);
                     getFragmentManager().beginTransaction().replace(R.id.detail_flFragmentFolder, fragmentDetail).commit();
@@ -128,5 +128,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onPause();
         //Quitamos el broadcastReceiver
         unregisterReceiver(broadcastReceiver);
+        //Reiniciamos la bandera
+        ACTIVE_UNINSTALLATION = false;
     }
 }

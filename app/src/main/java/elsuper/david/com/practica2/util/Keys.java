@@ -30,4 +30,8 @@ public class Keys {
 
     public static final String KEY_SERVICE_UPDATE = "key_service_update"; //ServiceNotificationUpdate - FragmentDetail
     public static final String KEY_SERVICE_UNINSTALL = "key_service_uninstall"; //ServiceNotificationUninstall - FragmentDetail
+
+    //Para que sólo se genere una notificación por tipo y no un listado de todas las que se van actualizando o desinstalando
+    public static final int KEY_NOTIFICATION_UPDATE_ID = 0;
+    public static final int KEY_NOTIFICATION_UNINSTALL_ID = 1;
 }
